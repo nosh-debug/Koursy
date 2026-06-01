@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return originalFetch;
+            },
+            set: function(val) {
+              originalFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          console.warn('Failed to define window.fetch property:', e);
+        }
+        try {
+          var originalSelfFetch = self.fetch;
+          Object.defineProperty(self, 'fetch', {
+            get: function() {
+              return originalSelfFetch;
+            },
+            set: function(val) {
+              originalSelfFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          console.warn('Failed to define self.fetch property:', e);
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <title>Test</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

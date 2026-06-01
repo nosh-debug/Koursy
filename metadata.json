@@ -1,0 +1,6 @@
+{
+  "name": "Test",
+  "description": "A beautiful, interactive Duolingo-style learning path and study session focus tracker for YouTube playlists and online courses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

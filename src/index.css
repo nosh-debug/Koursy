@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-theme-primary: var(--theme-primary);
+  --color-theme-secondary: var(--theme-secondary);
+  --color-theme-primary-transparent: var(--theme-primary-transparent);
+}
+
+:root {
+  /* Default (Electric Blue) */
+  --theme-primary: #1CB0F6;
+  --theme-secondary: #0b97d4;
+  --theme-primary-transparent: rgba(28, 176, 246, 0.1);
+}
+
+.theme-pink {
+  --theme-primary: #FF4B8B;
+  --theme-secondary: #C82962;
+  --theme-primary-transparent: rgba(255, 75, 139, 0.1);
+}
+
+.theme-green {
+  --theme-primary: #2B7A0B;
+  --theme-secondary: #1E5607;
+  --theme-primary-transparent: rgba(43, 122, 11, 0.1);
+}
+
+.theme-orange {
+  --theme-primary: #FF9600;
+  --theme-secondary: #CC7800;
+  --theme-primary-transparent: rgba(255, 150, 0, 0.1);
+}
+
+/* Global transitions to ensure an incredibly smooth dark-to-light transition experience */
+html, body {
+  background-color: #F7F7F7;
+  color: #1f2937;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+html.dark, html.dark body {
+  background-color: #0c141a;
+  color: #f3f4f6;
+}
+
+html, body, #root, main, aside, div, button, nav, header {
+  transition-property: background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Hide scrollbars globally while preserving scrollability */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+* {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+

@@ -1,0 +1,171 @@
+{
+  "entities": {
+    "user_stats": {
+      "title": "UserStats",
+      "description": "Statistics and gamified points tracking for the user.",
+      "type": "object",
+      "properties": {
+        "xp": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "integer"
+        },
+        "streak": {
+          "type": "integer"
+        },
+        "lastStudyDate": {
+          "type": "string"
+        },
+        "activeCourseId": {
+          "type": "string"
+        },
+        "totalFocusSeconds": {
+          "type": "integer"
+        },
+        "history": {
+          "type": "array"
+        },
+        "achievements": {
+          "type": "array"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["xp", "level", "streak", "totalFocusSeconds"]
+    },
+    "course": {
+      "title": "Course",
+      "description": "Standard study syllabus/curriculum.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "videos": {
+          "type": "array"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "shared_course": {
+      "title": "SharedCourse",
+      "description": "Publicly shared course.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "creatorName": { "type": "string" },
+        "courseName": { "type": "string" },
+        "description": { "type": "string" },
+        "likesCount": { "type": "integer" },
+        "dislikesCount": { "type": "integer" },
+        "videos": { "type": "array" }
+      },
+      "required": ["id", "creatorId", "creatorName", "courseName"]
+    },
+    "lesson_interaction": {
+      "title": "LessonInteraction",
+      "description": "User interactions for a specific video/lesson.",
+      "type": "object",
+      "properties": {
+        "likesCount": { "type": "integer" },
+        "dislikesCount": { "type": "integer" }
+      },
+      "required": ["likesCount", "dislikesCount"]
+    },
+    "user_vote": {
+      "title": "UserVote",
+      "description": "User vote (like/dislike) for a specific lesson.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "vote": { "type": "string" }
+      },
+      "required": ["userId", "vote"]
+    },
+    "comment": {
+      "title": "Comment",
+      "description": "User comment on a lesson.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "userName", "text", "createdAt"]
+    },
+    "navigation": {
+      "title": "Navigation",
+      "description": "User setting for layout navigation components.",
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "array"
+        }
+      },
+      "required": ["order"]
+    },
+    "follow": {
+      "title": "Follow",
+      "description": "User follow relation to another creator.",
+      "type": "object",
+      "properties": {
+        "followerId": { "type": "string" },
+        "followedId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["followerId", "followedId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user_stats",
+      "description": "User statistics tracking data."
+    },
+    "/users/{userId}/courses/{courseId}": {
+      "schema": "course",
+      "description": "Integrated learning curriculum for the user."
+    },
+    "/users/{userId}/navigation/{navId}": {
+      "schema": "navigation",
+      "description": "User customized layout configuration."
+    },
+    "/follows/{followId}": {
+      "schema": "follow",
+      "description": "Follow relations between users."
+    },
+    "/shared_courses/{courseId}": {
+      "schema": "shared_course",
+      "description": "Shared learning curriculum."
+    },
+    "/shared_courses/{courseId}/interactions/{videoId}": {
+      "schema": "lesson_interaction",
+      "description": "Total user interactions for a specific lesson."
+    },
+    "/shared_courses/{courseId}/interactions/{videoId}/user_votes/{userId}": {
+      "schema": "user_vote",
+      "description": "Individual user vote for a lesson."
+    },
+    "/shared_courses/{courseId}/interactions/{videoId}/comments/{userId}": {
+      "schema": "comment",
+      "description": "User comment on a lesson (document ID is userId)."
+    }
+  }
+}

@@ -1,0 +1,139 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Reusable helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ID poisoning guard
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidSharedCourse(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.creatorId is string && data.creatorId.size() <= 128 &&
+             data.creatorName is string && data.creatorName.size() <= 256 &&
+             data.courseName is string && data.courseName.size() <= 256 &&
+             (data.description is string ? data.description.size() <= 1024 : true) &&
+             data.likesCount is int && data.dislikesCount is int &&
+             data.videos is list;
+    }
+
+    function isValidVote(data) {
+      return data.userId is string && data.userId.size() <= 128 &&
+             (data.vote == 'like' || data.vote == 'dislike');
+    }
+
+    function isValidComment(data) {
+      return data.userId is string && data.userId.size() <= 128 &&
+             data.userName is string && data.userName.size() <= 256 &&
+             data.text is string && data.text.size() <= 500 &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidFollow(data) {
+      return data.followerId is string && data.followerId.size() <= 128 &&
+             data.followedId is string && data.followedId.size() <= 128 &&
+             data.createdAt is string && data.createdAt.size() <= 128;
+    }
+
+    // User statistic paths
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidId(userId) && (
+        request.resource.data.xp is int &&
+        request.resource.data.level is int &&
+        request.resource.data.streak is int &&
+        request.resource.data.totalFocusSeconds is int
+      );
+      allow delete: if isOwner(userId);
+
+      // Embedded Courses tracks
+      match /courses/{courseId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(courseId) && (
+          request.resource.data.id is string &&
+          request.resource.data.name is string &&
+          request.resource.data.name.size() <= 256
+        );
+        allow delete: if isOwner(userId);
+      }
+
+      // Sidebar/Navigation configurations
+      match /navigation/{navId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(navId) && (
+          request.resource.data.order is list
+        );
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Bug Reports
+    match /bug_reports/{reportId} {
+      allow create: if isSignedIn() && reportId == request.auth.uid + "_" + string(request.time.year()) + "_" + string(request.time.month()) + "_" + string(request.time.day());
+    }
+
+    // Follow relations
+    match /follows/{followId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidId(followId) && isValidFollow(request.resource.data) && request.resource.data.followerId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.followerId == request.auth.uid;
+    }
+
+    // User Public Profiles
+    match /users_profiles/{userId} {
+      allow read: if true;
+      allow create, update: if isOwner(userId) && isValidId(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // Community Content
+    match /shared_courses/{courseId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidId(courseId) && isValidSharedCourse(request.resource.data) && request.resource.data.creatorId == request.auth.uid;
+      allow update: if isSignedIn() && (
+        resource.data.creatorId == request.auth.uid || (
+          request.resource.data.id == resource.data.id &&
+          request.resource.data.creatorId == resource.data.creatorId
+        )
+      );
+      allow delete: if isSignedIn() && resource.data.creatorId == request.auth.uid; // Allow delete if owner
+
+      match /votes/{userId} {
+        allow read: if isSignedIn();
+        allow create, update: if isOwner(userId) && isValidVote(request.resource.data) && request.resource.data.userId == request.auth.uid;
+        allow delete: if isOwner(userId);
+      }
+
+      match /interactions/{videoId} {
+        allow read: if isSignedIn();
+        allow create, update: if isSignedIn() && request.resource.data.likesCount is int && request.resource.data.dislikesCount is int;
+
+        match /user_votes/{userId} {
+          allow read: if isSignedIn();
+          allow create, update: if isOwner(userId) && isValidVote(request.resource.data) && request.resource.data.userId == request.auth.uid;
+          allow delete: if isOwner(userId);
+        }
+
+        match /comments/{userId} {
+          allow read: if isSignedIn();
+          allow create, update: if isOwner(userId) && isValidComment(request.resource.data) && request.resource.data.userId == request.auth.uid;
+          allow delete: if isOwner(userId);
+        }
+      }
+    }
+  }
+}
