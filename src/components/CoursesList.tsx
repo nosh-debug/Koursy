@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Plus, Edit, Trash2, Check, Video as VideoIcon, Calendar, FileText, ArrowLeft, Star, ExternalLink, Sparkles, AlertCircle, Youtube, Search, X, Share2 } from 'lucide-react';
 import { Course, Video, Task, Chapter } from '../types';
 import { saveCourses } from '../storage';
-import { db } from '../lib/firebase';
-import { collection, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { collection, doc, setDoc, deleteDoc } from '../lib/firebase-supabase-adapter';
 
 export function getCourseCreatedDate(course: Course): string {
   if (course.createdAt) {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateEmail, updatePassword, updateProfile, sendPasswordResetEmail, deleteUser, getAdditionalUserInfo } from 'firebase/auth';
-import { auth, db } from '../lib/firebase';
-import { doc, setDoc, deleteDoc, getDocs, collection, getCountFromServer } from 'firebase/firestore';
+import { User, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateEmail, updatePassword, updateProfile, sendPasswordResetEmail, deleteUser, getAdditionalUserInfo } from '../lib/firebase-supabase-adapter';
+import { auth, db } from '../lib/firebase-supabase-adapter';
+import { doc, setDoc, deleteDoc, getDocs, collection, getCountFromServer } from '../lib/firebase-supabase-adapter';
 import { testConnection } from '../lib/firestoreUtils';
 
 interface FirebaseContextType {

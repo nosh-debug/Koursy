@@ -31,7 +31,7 @@ import * as THREE from 'three';
 import { Course, UserStats, Video } from '../types';
 import { FootageDB } from '../storage';
 import { base64ToBlobUrl } from '../lib/base64Utils';
-import { auth } from '../lib/firebase';
+import { auth } from '../lib/firebase-supabase-adapter';
 import { fetchFootageFromDb } from '../lib/firestoreUtils';
 import FocusDetailModal from './FocusDetailModal';
 

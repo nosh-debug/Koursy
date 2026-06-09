@@ -1,6 +1,6 @@
-import { doc, setDoc, getDoc, getDocFromServer, collection, getDocs, deleteDoc, query, where, collectionGroup } from 'firebase/firestore';
-import { db, auth, storage } from './firebase';
-import { ref, uploadString, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
+import { doc, setDoc, getDoc, getDocFromServer, collection, getDocs, deleteDoc, query, where, collectionGroup } from './firebase-supabase-adapter';
+import { db, auth, storage } from './firebase-supabase-adapter';
+import { ref, uploadString, getDownloadURL, listAll, deleteObject } from './firebase-supabase-adapter';
 import { Course, UserStats } from '../types';
 
 export enum OperationType {

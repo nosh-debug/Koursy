@@ -5,7 +5,7 @@ import { Play, Pause, RotateCcw, Check, Sparkles, Youtube, CheckCircle2, Award, 
 import { Course, Video, Task, UserStats, CompletionFootage } from '../types';
 import { addStudySession, saveCourses, FootageDB } from '../storage';
 import { base64ToBlobUrl } from '../lib/base64Utils';
-import { auth } from '../lib/firebase';
+import { auth } from '../lib/firebase-supabase-adapter';
 import { saveFootageToDb, fetchFootageFromDb } from '../lib/firestoreUtils';
 import { compressImage } from '../lib/compressionUtils';
 

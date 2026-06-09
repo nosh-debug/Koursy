@@ -6,8 +6,8 @@ import TestLogo from './TestLogo';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { db } from '../lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { doc, getDoc, setDoc } from '../lib/firebase-supabase-adapter';
 
 interface SidebarProps {
   currentTab: 'home' | 'courses' | 'today' | 'settings' | 'community' | 'profile' | 'stats' | 'upgrade' | 'shop' | 'bug_report';

@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { User, Upload, Eye, EyeOff, Globe, BookOpen, Plus, Shield, Check, X, LogIn, ThumbsUp, Calendar, Star } from 'lucide-react';
 import { Course, UserStats } from '../types';
 import { useFirebase } from '../context/FirebaseContext';
-import { db } from '../lib/firebase';
-import { doc, setDoc, getDoc, deleteDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { doc, setDoc, getDoc, deleteDoc, collection, query, where, onSnapshot } from '../lib/firebase-supabase-adapter';
 
 interface ProfileTabProps {
   courses: Course[];

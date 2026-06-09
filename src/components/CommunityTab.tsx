@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, Search, Sparkles, BookOpen, FileText, Download, Lock, Check, UserPlus, ArrowLeft, Play, Calendar, X } from 'lucide-react';
 import { useFirebase } from '../context/FirebaseContext';
-import { db } from '../lib/firebase';
-import { collection, doc, setDoc, deleteDoc, onSnapshot, query, where, orderBy } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { collection, doc, setDoc, deleteDoc, onSnapshot, query, where, orderBy } from '../lib/firebase-supabase-adapter';
 import { Course } from '../types';
 
 interface CommunityTabProps {

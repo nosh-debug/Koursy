@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Eye, EyeOff, Save, CheckCircle } from 'lucide-react';
-import { confirmPasswordReset, verifyPasswordResetCode } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { confirmPasswordReset, verifyPasswordResetCode } from '../lib/firebase-supabase-adapter';
+import { auth } from '../lib/firebase-supabase-adapter';
 import TestLogo from './TestLogo';
 
 interface ResetPasswordModalProps {

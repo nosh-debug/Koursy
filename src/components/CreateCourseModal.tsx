@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Youtube, AlertCircle, Check, Trash2, X, Plus, Sparkles, BookOpen } from 'lucide-react';
 import { Course, Video, Task } from '../types';
-import { db } from '../lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { doc, setDoc } from '../lib/firebase-supabase-adapter';
 import { saveCourses } from '../storage';
 
 interface CreateCourseModalProps {

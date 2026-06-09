@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AlertTriangle, Send, CheckCircle } from 'lucide-react';
 import { useFirebase } from '../context/FirebaseContext';
-import { db } from '../lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { doc, setDoc } from '../lib/firebase-supabase-adapter';
 
 export default function BugReportTab() {
   const { user } = useFirebase();

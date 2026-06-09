@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { db } from '../lib/firebase';
-import { collection, query, onSnapshot, orderBy, limit } from 'firebase/firestore';
+import { db } from '../lib/firebase-supabase-adapter';
+import { collection, query, onSnapshot, orderBy, limit } from '../lib/firebase-supabase-adapter';
 import { useFirebase } from '../context/FirebaseContext';
 import { UserStats } from '../types';
 import { Trophy, Flame, Award, Clock, Sparkles, LogIn, TrendingUp, Compass, Star, Shield } from 'lucide-react';
